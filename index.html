@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RankForge: mock tests and interview prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&f[]=general-sans@500,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f1ed;--sf:#fff;--ink:#1b1c20;--mut:#686a73;--bd:#d9d8d1;--ac:#2438a6;--acl:#e8ebfa;--ok:#2a7a4b;--no:#b3261e;--mk:#7a4fb0;--am:#b9780f;--fh:'Plus Jakarta Sans',sans-serif;--fb:'Inter',sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--fb)}
+h1,h2,h3,h4,.logo,.big{font-family:var(--fh);margin:0;letter-spacing:-.01em}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+header{position:sticky;top:0;z-index:5;background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:14px;padding:10px 20px}
+.logo{font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px}.logo i{width:18px;height:18px;background:var(--ac);border-radius:4px 10px 4px 10px;display:block}
+#nav{display:flex;gap:2px;overflow-x:auto;flex:1}#nav button{border:0;background:none;padding:8px 12px;border-radius:99px;color:var(--mut);white-space:nowrap}
+#nav button.on{background:var(--acl);color:var(--ac);font-weight:600}
+.tools{display:flex;gap:8px;align-items:center}
+.btn{background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:8px;padding:9px 16px;font-weight:600}.btn.ghost{background:none;color:var(--ink);border-color:var(--bd)}.btn.sm{padding:6px 12px;font-size:13px}.btn.full{width:100%;margin:5px 0}.btn:disabled{opacity:.5}
+.av{width:34px;height:34px;border-radius:50%;border:0;background:var(--ink);color:#fff;font-weight:700}
+main{max-width:1040px;margin:0 auto;padding:24px 20px 60px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:20px;margin-bottom:16px}
+.hero{padding:18px 0 22px;max-width:620px}.hero h1{font-size:clamp(28px,5vw,42px);font-weight:800;line-height:1.1}.hero p{color:var(--mut);margin:10px 0 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid .card{margin:0}.two{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}.two .card{margin-bottom:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.rowb{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.mut,small{color:var(--mut)}.tag{background:var(--acl);color:var(--ac);border-radius:99px;padding:2px 9px;font-size:12px;font-weight:600}
+.tbar{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:10px 16px;margin-bottom:14px}
+.timer{font-family:var(--fh);font-weight:700;font-size:22px;font-variant-numeric:tabular-nums}
+.tgrid{display:grid;grid-template-columns:1fr 270px;gap:16px;align-items:start}
+.qt{font-size:18px;margin:10px 0 14px;max-width:70ch}
+.opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:12px;margin:8px 0}
+.opt span{width:26px;height:26px;border-radius:50%;border:1px solid var(--bd);display:grid;place-items:center;font-size:12px;font-weight:600;flex:none}
+.opt.sel{border-color:var(--ac);background:var(--acl)}.opt.sel span{background:var(--ac);color:#fff;border-color:var(--ac)}
+.opt.right{border-color:var(--ok);background:#e6f3ea}.opt.wrong{border-color:var(--no);background:#fbe9e7}
+.expl{border-left:3px solid var(--ac);background:#f7f7fb;padding:10px 14px;border-radius:0 8px 8px 0;margin-top:10px}.expl ol,.rv ol{margin:6px 0 0;padding-left:20px}
+.pal{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pal button{height:40px;border-radius:8px;border:1px solid var(--bd);background:#eceae4;font-weight:600}
+.pal .a{background:var(--ok);color:#fff;border-color:var(--ok)}.pal .v{background:var(--no);color:#fff;border-color:var(--no)}.pal .m{background:var(--mk);color:#fff;border-color:var(--mk);border-radius:50%}.pal .cur{outline:2px solid var(--ink);outline-offset:2px}
+.key{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:12px;color:var(--mut)}.key b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;background:#eceae4;border:1px solid var(--bd)}
+.big{font-size:60px;font-weight:800;line-height:1.1;margin:8px 0}.big small{font-size:22px;font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}.stat{background:var(--bg);border-radius:8px;padding:10px 12px}.stat b{display:block;font-family:var(--fh);font-size:20px}
+.mt{margin:12px 0}.mh{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}.bar{height:8px;background:#e7e5df;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;border-radius:99px;transition:width .5s}
+.trend{display:flex;gap:8px;align-items:flex-end;height:130px;margin-top:10px}.tb{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:12px;color:var(--mut)}.tb i{width:100%;max-width:34px;background:var(--ac);border-radius:5px 5px 0 0;min-height:3px}
+.hist{display:flex;justify-content:space-between;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--bd);padding:10px 0}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--bd)}th:not(:first-child),td:not(:first-child){text-align:center}td.y{color:var(--ok);font-weight:700}
+input,select,textarea{width:100%;background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:10px 12px;margin:5px 0}select{width:auto}textarea{min-height:320px;resize:vertical;line-height:1.6}
+.or{text-align:center;color:var(--mut);margin:12px 0;font-size:13px}.err{color:var(--no)}.okm{color:var(--ok)}.note{font-size:13px;color:var(--mut);background:var(--bg);padding:8px 10px;border-radius:8px}
+#ov{position:fixed;inset:0;background:rgba(20,20,25,.5);display:none;place-items:center;z-index:20;padding:16px}#ov.on{display:grid}
+#md{background:var(--sf);border-radius:12px;padding:24px;width:100%;max-width:420px;max-height:90vh;overflow:auto;position:relative}
+#md .x{position:absolute;right:12px;top:10px;border:0;background:none;font-size:22px;color:var(--mut)}
+.pair{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--bd);border-radius:8px;padding:10px 12px;margin:8px 0}.pair input{width:auto;margin:5px 0 0}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;z-index:30;max-width:90vw;font-size:14px}#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:760px){.grid,.two,.tgrid{grid-template-columns:1fr}header{flex-wrap:wrap}#nav{order:3;flex-basis:100%}.big{font-size:46px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<header><div class="logo"><i></i>RankForge</div><nav id="nav"></nav><div class="tools"><button class="btn ghost sm" onclick="studio()" aria-label="Typography Studio">Aa</button><span id="acct"></span></div></header>
+<main id="app"></main><div id="ov"><div id="md" role="dialog" aria-modal="true"></div></div><div id="toast" role="status"></div>
+
+<!-- Firebase (compat SDK). If these fail to load the app falls back to on-device saving. -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ===== SETUP: paste your Firebase web-app config here (Project settings > Your apps > Web) ===== */
+const CFG={
+  apiKey:"YOUR_API_KEY", // paste your Web API key (Project settings > Your apps > Web app)
+  authDomain:"rankforge-8a42d.firebaseapp.com",
+  projectId:"rankforge-8a42d",
+  storageBucket:"rankforge-8a42d.firebasestorage.app",
+  messagingSenderId:"1052779171430",
+  appId:"YOUR_APP_ID" // paste your Web App ID from the same screen
+};
+/* ================================================================================================ */
+
+const Q=[
+["qa","Percentages","A shirt priced ₹800 is marked up 25%, then sold at a 20% discount. What is the final price?",["₹800","₹820","₹780","₹840"],0,"Markup: 800 × 1.25 = 1000|Discount: 1000 × 0.80 = 800|The factors 1.25 × 0.8 multiply to 1, so the price is unchanged"],
+["qa","Time and Work","A can finish a job in 12 days and B in 18 days. How long will they take working together?",["6 days","7.2 days","7.5 days","15 days"],1,"Daily work: 1/12 + 1/18 = 3/36 + 2/36 = 5/36|Days = 36/5 = 7.2"],
+["qa","Profit and Loss","The cost price of 12 pens equals the selling price of 10 pens. What is the profit percentage?",["10%","20%","25%","12%"],1,"12 CP = 10 SP, so SP/CP = 12/10 = 1.2|Profit = 20%"],
+["qa","Speed and Distance","A 200 m train crosses a pole in 10 s. How long does it take to cross a 300 m platform?",["15 s","20 s","25 s","30 s"],2,"Speed = 200/10 = 20 m/s|Distance to cover = 200 + 300 = 500 m|Time = 500/20 = 25 s"],
+["lr","Number Series","What comes next: 3, 6, 11, 18, 27, ?",["36","38","40","42"],1,"Differences: 3, 5, 7, 9|Next difference is 11|27 + 11 = 38"],
+["lr","Syllogism","Premises: All pens are books. Some books are cups. Conclusion: Some pens are cups.",["Follows","Does not follow","Follows only if all cups are books","Contradicts the premises"],1,"Pens sit inside books, but the cups may be in a different part of books|Nothing forces an overlap between pens and cups, so it does not follow"],
+["lr","Coding-Decoding","If CAT = 24 (3 + 1 + 20), what is DOG?",["24","26","28","30"],1,"Letter positions: D = 4, O = 15, G = 7|4 + 15 + 7 = 26"],
+["lr","Directions","Ravi walks 5 km north, turns right and walks 3 km, turns right again and walks 5 km. How far is he from the start?",["3 km","5 km","8 km","13 km"],0,"North 5, east 3, then south 5|North and south cancel|Only the 3 km east displacement remains"],
+["cs","Complexity","What is the worst-case time complexity of binary search on a sorted array of n items?",["O(n)","O(log n)","O(n log n)","O(1)"],1,"Each step halves the search range|n → n/2 → n/4 … → 1 takes log2 n steps"],
+["cs","Data Structures","Which structure follows last-in, first-out order?",["Stack","Queue","Hash table","Graph"],0,"A stack adds and removes at the same end (the top)|A queue is first-in, first-out"],
+["cs","Databases","Which SQL clause filters groups after aggregation?",["WHERE","HAVING","GROUP BY","ORDER BY"],1,"WHERE filters rows before grouping|HAVING filters the groups produced by GROUP BY, so it can use COUNT or SUM"],
+["cs","Operating Systems","Two processes each wait forever for a resource the other holds. What is this called?",["Starvation","Deadlock","Thrashing","Race condition"],1,"Circular wait with hold-and-wait is the classic deadlock pattern|Starvation means one process is repeatedly passed over, not mutually blocked"],
+["ga","Polity","Which Article of the Indian Constitution abolishes untouchability?",["Article 15","Article 16","Article 17","Article 21"],2,"Article 15 bars discrimination, Article 16 covers public employment|Article 17 abolishes untouchability"],
+["ga","Economy","Where is the headquarters of the International Monetary Fund?",["Geneva","Washington, D.C.","New York","Paris"],1,"The IMF and the World Bank are both headquartered in Washington, D.C.|Geneva hosts the WTO"],
+["ga","Science","Which gas makes up most of Earth's atmosphere?",["Oxygen","Nitrogen","Argon","Carbon dioxide"],1,"Nitrogen is about 78% of dry air|Oxygen is about 21%"],
+["ga","Banking","In which year was the Reserve Bank of India established?",["1921","1935","1947","1950"],1,"The RBI began operating on 1 April 1935|It was nationalised in 1949"]];
+const TR={qa:"Quantitative Aptitude",lr:"Logical Reasoning",cs:"Core CS / Technical Interview",ga:"General Awareness"};
+const PAIRS=[["Plus Jakarta Sans","Inter"],["Satoshi","DM Sans"],["Poppins","Open Sans"],["Montserrat","Roboto"],["General Sans","Inter"]];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=s=>{s=Math.max(0,s|0);return String(s/60|0).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const fresh=()=>({h:[],v:[],n:"",pro:false});
+let S=fresh(),user=null,auth=null,db=null,T=null,tick=null,view="home",last=null,vf="all",cur=+(lsGet("rf_type")||0),nt=null;
+try{S=JSON.parse(lsGet("rf_guest")||"null")||fresh()}catch(e){}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),4200)}
+function modal(h){$("#md").innerHTML='<button class="x" onclick="closeM()" aria-label="Close">×</button>'+h;$("#ov").classList.add("on")}
+function closeM(){$("#ov").classList.remove("on")}
+$("#ov").addEventListener("click",e=>{if(e.target.id==="ov")closeM()});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM()});
+
+/* ---------- typography ---------- */
+function setType(i){cur=i;const[a,b]=PAIRS[i],r=document.documentElement.style;r.setProperty("--fh","'"+a+"',sans-serif");r.setProperty("--fb","'"+b+"',sans-serif");lsSet("rf_type",i)}
+function studio(){modal(`<h2>Typography Studio</h2><p class="mut">Pick a heading and body pairing. It applies everywhere and is remembered on this device.</p>${PAIRS.map(([a,b],i)=>`<label class="pair"><input type="radio" name="tp" ${cur===i?"checked":""} onchange="setType(${i})"><span><b style="font-family:'${a}',sans-serif;font-size:17px">${a}</b> <small>with ${b}</small><br><span style="font-family:'${b}',sans-serif">Read the question twice, answer it once.</span></span></label>`).join("")}`)}
+setType(cur);
+
+/* ---------- storage and Firebase ---------- */
+const live=!CFG.apiKey.startsWith("YOUR_")&&typeof firebase!=="undefined";
+if(live){try{firebase.initializeApp(CFG);auth=firebase.auth();db=firebase.firestore();auth.onAuthStateChanged(u=>{user=u;load()})}catch(e){auth=db=null;console.warn("Firebase init failed",e)}}
+function save(){lsSet("rf_"+(user?user.uid:"guest"),JSON.stringify(S));
+ if(user&&db)db.doc("users/"+user.uid).set({h:S.h,v:S.v,n:S.n,pro:S.pro,email:user.email||"",name:user.displayName||"",updated:Date.now()},{merge:true}).catch(()=>toast("Cloud save failed. Your changes are kept on this device."))}
+async function load(){
+ try{S=JSON.parse(lsGet("rf_"+(user?user.uid:"guest"))||"null")||fresh()}catch(e){S=fresh()}
+ if(user&&db){try{const d=await db.doc("users/"+user.uid).get();if(d.exists){const x=d.data();S={h:x.h||[],v:x.v||[],n:x.n||"",pro:!!x.pro}}else save()}catch(e){toast("Signed in, but Firestore could not be reached. Check that the database exists and its rules allow this user.")}}
+ if(!T)draw();else nav()}
+const AE={"auth/operation-not-allowed":"This sign-in method is not enabled yet. Turn it on under Authentication > Sign-in method in the Firebase console.","auth/unauthorized-domain":"This domain is not authorised. Add it under Authentication > Settings > Authorized domains.","auth/popup-blocked":"Your browser blocked the sign-in popup. Allow popups for this site and try again.","auth/invalid-credential":"Email or password is incorrect.","auth/wrong-password":"Email or password is incorrect.","auth/user-not-found":"No account uses that email. Choose Create account.","auth/email-already-in-use":"That email already has an account. Sign in instead.","auth/weak-password":"Use a password with at least 6 characters.","auth/invalid-email":"That email address looks invalid.","auth/account-exists-with-different-credential":"This email is registered with another sign-in method. Use that one.","auth/network-request-failed":"Network error. Check your connection.","auth/operation-not-supported-in-this-environment":"Sign-in needs http(s) hosting. Serve this file from localhost or your domain, not file://."};
+const aerr=e=>AE[e.code]||e.message||"Sign-in failed.";
+function signin(){modal(`<h2>Sign in to RankForge</h2><p class="mut">Your mock history, Mistake Vault, notes and Pro status follow you across devices.</p>
+<button class="btn ghost full" onclick="oauth('google')">Continue with Google</button><button class="btn ghost full" onclick="oauth('microsoft')">Continue with Microsoft or Outlook</button><button class="btn ghost full" onclick="oauth('apple')">Continue with Apple</button>
+<div class="or">or use your email</div><input id="em" type="email" placeholder="Email" autocomplete="email"><input id="pw" type="password" placeholder="Password, 6 or more characters" autocomplete="current-password">
+<div class="row" style="margin-top:8px"><button class="btn" onclick="mail('in')">Sign in</button><button class="btn ghost" onclick="mail('up')">Create account</button><button class="btn ghost" onclick="mail('reset')">Reset password</button></div><p id="amsg" class="err" role="alert"></p>
+${live&&auth?"":'<p class="note">Cloud sync is off until a Firebase config is pasted into the script. Until then everything saves in this browser.</p>'}`)}
+async function oauth(p){const m=$("#amsg");m.className="err";m.textContent="";
+ if(!auth){m.textContent="Cloud sign-in is not configured yet. Paste your Firebase config at the top of the script.";return}
+ const pr=p==="google"?new firebase.auth.GoogleAuthProvider():new firebase.auth.OAuthProvider(p==="microsoft"?"microsoft.com":"apple.com");
+ if(p==="apple"){pr.addScope("email");pr.addScope("name")}if(p==="microsoft")pr.setCustomParameters({prompt:"select_account"});
+ try{await auth.signInWithPopup(pr);closeM()}catch(e){if(e.code!=="auth/popup-closed-by-user"&&e.code!=="auth/cancelled-popup-request")m.textContent=aerr(e)}}
+async function mail(k){const e=$("#em").value.trim(),p=$("#pw").value,m=$("#amsg");m.className="err";m.textContent="";
+ if(!auth){m.textContent="Cloud sign-in is not configured yet. Paste your Firebase config at the top of the script.";return}
+ if(!e){m.textContent="Enter your email address.";return}
+ try{if(k==="reset"){await auth.sendPasswordResetEmail(e);m.className="okm";m.textContent="Reset link sent. Check your inbox and spam folder.";return}
+  if(p.length<6){m.textContent="Use a password with at least 6 characters.";return}
+  if(k==="up")await auth.createUserWithEmailAndPassword(e,p);else await auth.signInWithEmailAndPassword(e,p);closeM()}catch(x){m.textContent=aerr(x)}}
+function acct(){modal(`<h2>${esc(user.displayName||"Your account")}</h2><p class="mut">${esc(user.email||"")}</p><p>Cloud sync: <b>on</b><br>Plan: <b>${S.pro?"Pro Pass":"Free"}</b></p><button class="btn full" onclick="out()">Sign out</button>`)}
+async function out(){closeM();try{await auth.signOut()}catch(e){toast("Could not sign out. Try again.")}}
+
+/* ---------- navigation ---------- */
+function nav(){const it=[["home","Practice"],["progress","Progress"],["vault","Vault"+(S.v.length?" ("+S.v.length+")":"")],["notes","Notes"],["pro",S.pro?"Pro active":"Pro Pass"]];
+ $("#nav").innerHTML=it.map(([k,l])=>`<button class="${view===k||(view==="result"&&k==="progress")?"on":""}" onclick="go('${k}')">${l}</button>`).join("");
+ $("#acct").innerHTML=user?`<button class="av" onclick="acct()" aria-label="Account">${esc((user.displayName||user.email||"?")[0].toUpperCase())}</button>`:'<button class="btn sm" onclick="signin()">Sign in</button>'}
+function go(v){if(T&&v!=="test"){if(!confirm("Leave this test? Your answers will be discarded."))return;clearInterval(tick);T=null}view=v;draw()}
+function draw(){nav();if(T)return test();({home,progress,vault,notes,pro,result:()=>last?result(last):home()}[view]||home)();window.scrollTo(0,0)}
+const todayN=()=>S.h.filter(r=>new Date(r.d).toDateString()===new Date().toDateString()).length;
+
+/* ---------- home ---------- */
+function home(){const tp=k=>[...new Set(Q.filter(q=>q[0]===k).map(q=>q[1]))].join(", ");
+ $("#app").innerHTML=`<section class="hero"><h1>Timed practice, honest review.</h1><p>Sit a sectional mock, see exactly where the marks went, and keep every miss in one place until you stop making it.</p></section>
+ <div class="grid">${Object.keys(TR).map(k=>`<div class="card"><h3>${TR[k]}</h3><p class="mut">${Q.filter(q=>q[0]===k).length} questions on ${tp(k)}</p><div class="row"><button class="btn" onclick="start('${k}','exam')">Exam Hall</button><button class="btn ghost" onclick="start('${k}','learn')">Learning mode</button></div></div>`).join("")}</div>
+ <div class="card" style="margin-top:16px"><h3>Full mock, all four tracks ${S.pro?"":'<span class="tag">Pro</span>'}</h3><p class="mut">${Q.length} mixed questions on one clock. Exam Hall gives 75 seconds a question, +1 for a right answer and −0.25 for a wrong one.</p><div class="row"><button class="btn" onclick="start('all','exam')">Start full mock</button></div></div>
+ <p class="note">${user?"Signed in. Your progress syncs to your account.":"You are practising as a guest, so progress stays in this browser. Sign in to sync it."} ${S.pro?"":`Free plan: ${Math.max(0,3-todayN())} of 3 mocks left today.`}</p>`}
+function start(k,mode){
+ if(!S.pro&&(k==="all"||todayN()>=3)){toast(k==="all"?"Full mocks are part of Pro Pass.":"The free plan covers 3 mocks a day. Pro Pass removes the limit.");return go("pro")}
+ const qs=Q.map((q,i)=>i).filter(i=>k==="all"||Q[i][0]===k).sort(()=>Math.random()-.5),L=qs.length;
+ T={k,mode,qs,i:0,a:Array(L).fill(null),mk:Array(L).fill(false),vis:Array(L).fill(false),lock:Array(L).fill(false),qt:Array(L).fill(0),left:L*75,el:0,ls:Date.now()};T.vis[0]=true;
+ clearInterval(tick);tick=setInterval(()=>{if(!T)return;if(mode==="exam"){T.left--;if(T.left<=0){toast("Time is up. Submitting your test.");return finish()}}else T.el++;const e=$("#tm");if(e)e.textContent=fmt(mode==="exam"?T.left:T.el)},1000);
+ view="test";draw()}
+
+/* ---------- test ---------- */
+const lap=()=>{T.qt[T.i]+=(Date.now()-T.ls)/1000;T.ls=Date.now()};
+const st=i=>T.mk[i]?"m":T.a[i]!=null?"a":T.vis[i]?"v":"";
+function test(){const i=T.i,q=Q[T.qs[i]],ex=T.mode==="exam",L=T.qs.length,a=T.a[i],lk=!ex&&T.lock[i];
+ $("#app").innerHTML=`<div class="tbar"><div><b>${TR[T.k]||"Full mock"}</b> <span class="tag">${ex?"Exam Hall":"Learning mode"}</span></div><div class="timer" id="tm" aria-label="${ex?"Time left":"Time elapsed"}">${fmt(ex?T.left:T.el)}</div><button class="btn sm" onclick="submitT()">Submit test</button></div>
+ <div class="tgrid"><div class="card"><div class="mut">Question ${i+1} of ${L}, ${esc(q[1])}${ex?", +1 right, −0.25 wrong":""}</div><p class="qt">${esc(q[2])}</p>
+ ${q[3].map((o,j)=>`<button class="opt ${a===j?"sel":""} ${lk?(j===q[4]?"right":a===j?"wrong":""):""}" ${lk?"disabled":""} onclick="pick(${j})"><span>${"ABCD"[j]}</span>${esc(o)}</button>`).join("")}
+ ${lk?`<div class="expl"><b>${a===q[4]?"Correct.":"Not quite. The answer is "+esc(q[3][q[4]])+"."}</b><ol>${q[5].split("|").map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>`:""}
+ <div class="row">${i>0?'<button class="btn ghost" onclick="jump('+(i-1)+')">Previous</button>':""}
+ ${ex?`<button class="btn ghost" onclick="clr()">Clear answer</button><button class="btn ghost" onclick="mark()">Mark for review and next</button><button class="btn" onclick="snext()">Save and next</button>`:`<button class="btn" onclick="snext()" ${lk?"":"disabled"}>${i<L-1?"Next question":"Last question"}</button>`}</div></div>
+ <aside class="card"><h4>Question palette</h4><div class="pal">${T.qs.map((_,j)=>`<button class="${st(j)} ${j===i?"cur":""}" onclick="jump(${j})" aria-label="Question ${j+1}">${j+1}</button>`).join("")}</div>
+ <div class="key"><span><b style="background:var(--ok)"></b>Answered</span><span><b style="background:var(--no)"></b>Not answered</span><span><b style="background:var(--mk);border-radius:50%"></b>For review</span><span><b></b>Not visited</span></div></aside></div>`}
+function pick(j){if(T.mode!=="exam"&&T.lock[T.i])return;T.a[T.i]=j;if(T.mode!=="exam")T.lock[T.i]=true;test()}
+function jump(j){lap();T.i=j;T.vis[j]=true;test()}
+function snext(){T.mk[T.i]=false;jump(Math.min(T.i+1,T.qs.length-1))}
+function mark(){T.mk[T.i]=true;jump(Math.min(T.i+1,T.qs.length-1))}
+function clr(){T.a[T.i]=null;T.mk[T.i]=false;test()}
+function submitT(){const u=T.a.filter(x=>x==null).length;if(confirm(u?u+" question"+(u>1?"s are":" is")+" unanswered. Submit now?":"Submit your test?"))finish()}
+function finish(){if(!T)return;lap();clearInterval(tick);let c=0,w=0,s=0,secs=0;const tp={},miss=[],neg=T.mode==="exam"?.25:0,L=T.qs.length;
+ T.qs.forEach((qi,i)=>{const q=Q[qi],a=T.a[i];tp[q[1]]=tp[q[1]]||[0,0];tp[q[1]][1]++;secs+=T.qt[i];
+  if(a==null){s++;miss.push(qi)}else if(a===q[4]){c++;tp[q[1]][0]++}else{w++;miss.push(qi)}});
+ const r={d:Date.now(),k:T.k,m:T.mode,sc:+(c-w*neg).toFixed(2),max:L,c,w,s,acc:Math.round(c/L*100),secs:Math.round(secs),tp,qs:T.qs,a:T.a,qt:T.qt.map(x=>Math.round(x))};
+ S.h.push(r);S.h=S.h.slice(-40);miss.forEach(qi=>{if(!S.v.includes(qi))S.v.push(qi)});save();T=null;last=r;view="result";draw()}
+
+/* ---------- results, progress ---------- */
+const mcol=p=>p<60?"var(--no)":p<85?"var(--am)":"var(--ok)";
+const meter=(t,c,n)=>{const p=Math.round(c/n*100);return `<div class="mt"><div class="mh"><span>${esc(t)}</span><span>${c} of ${n} (${p}%)</span></div><div class="bar"><i style="width:${p}%;background:${mcol(p)}"></i></div></div>`};
+const stat=(l,v)=>`<div class="stat"><small>${l}</small><b>${v}</b></div>`;
+function result(r){const ts=Object.entries(r.tp).map(([t,[c,n]])=>[t,c,n,c/n]).sort((a,b)=>a[3]-b[3]),wk=ts.filter(x=>x[3]<.6),avg=Math.round(r.secs/r.max);
+ const rec=(wk.length?wk.slice(0,3).map(x=>`<p><b>${esc(x[0])}</b>: ${x[1]} of ${x[2]} right. Redo its questions in the Vault, then retake the sectional.</p>`).join(""):"<p>No topic fell below 60%. Raise the difficulty by tightening your pace or moving to the full mock.</p>")+(avg>75?`<p>You averaged ${avg}s a question. Aim for under 75s by skipping and flagging the slow ones first.</p>`:"")+(r.s?`<p>${r.s} skipped. In Exam Hall an educated guess between two options is worth the −0.25 risk.</p>`:"");
+ $("#app").innerHTML=`<div class="card"><div class="mut">${TR[r.k]||"Full mock"}, ${r.m==="exam"?"Exam Hall":"Learning mode"}, ${new Date(r.d).toLocaleString()}</div><div class="big">${r.sc}<small> out of ${r.max}</small></div>
+ <div class="stats">${stat("Accuracy",r.acc+"%")}${stat("Correct",r.c)}${stat("Wrong",r.w)}${stat("Skipped",r.s)}${stat("Avg per question",fmt(avg))}${stat("Total time",fmt(r.secs))}</div>
+ <div class="row"><button class="btn" onclick="go('home')">Back to practice</button><button class="btn ghost" onclick="exportR()">Export report ${S.pro?"":'<span class="tag">Pro</span>'}</button></div></div>
+ <div class="two"><div class="card"><h3>Topic breakdown</h3>${ts.map(x=>meter(x[0],x[1],x[2])).join("")}</div><div class="card"><h3>What to revise next</h3>${rec}</div></div>
+ <div class="card"><h3>Time per question ${S.pro?"":'<span class="tag">Pro</span>'}</h3>${S.pro?`<div class="trend">${r.qt.map((t,i)=>`<div class="tb" title="Question ${i+1}: ${t}s"><i style="height:${Math.min(100,t/90*100)}%;background:${t>75?"var(--am)":"var(--ac)"}"></i>${i+1}</div>`).join("")}</div><small>Amber bars ran past 75 seconds.</small>`:'<p class="mut">Pro Pass shows how long each question took. The free report keeps the average above.</p>'}</div>
+ <h3 style="margin:22px 0 12px">Answer review</h3>${r.qs.map((qi,k)=>{const q=Q[qi],a=r.a[k];return `<div class="card rv"><small>Question ${k+1}, ${esc(q[1])}: <b style="color:${a==null?"var(--mut)":a===q[4]?"var(--ok)":"var(--no)"}">${a==null?"Skipped":a===q[4]?"Correct":"Wrong"}</b>, ${r.qt[k]}s</small><p class="qt">${esc(q[2])}</p><p>Your answer: ${a==null?"none":esc(q[3][a])}<br>Correct answer: <b>${esc(q[3][q[4]])}</b></p><ol>${q[5].split("|").map(s=>`<li>${esc(s)}</li>`).join("")}</ol>${S.v.includes(qi)?"":`<div class="row"><button class="btn ghost sm" onclick="addV(${qi})">Save to vault</button></div>`}</div>`}).join("")}`}
+function addV(i){if(!S.v.includes(i))S.v.push(i);save();toast("Saved to your Mistake Vault.");nav();if(view==="result")result(last)}
+function exportR(){if(!S.pro){toast("Exportable reports are part of Pro Pass.");return go("pro")}const r=last||S.h[S.h.length-1];if(!r)return toast("Take a mock first.");
+ const L=["RankForge report, "+new Date(r.d).toLocaleString(),(TR[r.k]||"Full mock")+" ("+(r.m==="exam"?"Exam Hall":"Learning mode")+")","Score "+r.sc+" / "+r.max+", accuracy "+r.acc+"%, correct "+r.c+", wrong "+r.w+", skipped "+r.s+", time "+fmt(r.secs),"","Topics:",...Object.entries(r.tp).map(([t,[c,n]])=>"  "+t+": "+c+"/"+n),"","Per question:",...r.qs.map((qi,k)=>"  Q"+(k+1)+" "+Q[qi][1]+": "+(r.a[k]==null?"skipped":r.a[k]===Q[qi][4]?"correct":"wrong")+", "+r.qt[k]+"s")];
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([L.join("\n")],{type:"text/plain"}));a.download="rankforge-report.txt";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+function progress(){const H=S.h;if(!H.length){$("#app").innerHTML='<div class="card"><h2>Progress</h2><p class="mut">Nothing to chart yet. Finish one mock and your accuracy, weak topics and history appear here.</p><button class="btn" onclick="go(\'home\')">Take a mock</button></div>';return}
+ const tp={};H.forEach(r=>Object.entries(r.tp).forEach(([t,[c,n]])=>{tp[t]=tp[t]||[0,0];tp[t][0]+=c;tp[t][1]+=n}));const ts=Object.entries(tp).map(([t,[c,n]])=>[t,c,n,c/n]).sort((a,b)=>a[3]-b[3]);
+ $("#app").innerHTML=`<h2 style="margin-bottom:14px">Progress</h2><div class="card"><div class="stats">${stat("Mocks taken",H.length)}${stat("Average accuracy",Math.round(H.reduce((s,r)=>s+r.acc,0)/H.length)+"%")}${stat("Best accuracy",Math.max(...H.map(r=>r.acc))+"%")}${stat("In your vault",S.v.length)}</div><div class="trend">${H.slice(-10).map(r=>`<div class="tb" title="${new Date(r.d).toLocaleDateString()}"><i style="height:${r.acc}%"></i>${r.acc}</div>`).join("")}</div><small>Accuracy of your last ${Math.min(10,H.length)} mocks</small></div>
+ <div class="two"><div class="card"><h3>Accuracy by topic</h3>${ts.map(x=>meter(x[0],x[1],x[2])).join("")}</div><div class="card"><h3>Weakest topics</h3>${ts.filter(x=>x[3]<.7).slice(0,4).map(x=>`<p><b>${esc(x[0])}</b> sits at ${Math.round(x[3]*100)}%.</p>`).join("")||"<p>Every topic is above 70%. Keep the streak going.</p>"}</div></div>
+ <div class="card"><h3>History</h3>${H.map((r,i)=>[r,i]).reverse().map(([r,i])=>`<button class="hist" onclick="last=S.h[${i}];view='result';draw()"><span>${esc(TR[r.k]||"Full mock")} <small>${new Date(r.d).toLocaleDateString()}</small></span><b>${r.sc} / ${r.max}</b></button>`).join("")}</div>`}
+
+/* ---------- vault, notes, pro ---------- */
+function vault(){const l=S.v.filter(i=>vf==="all"||Q[i][0]===vf);
+ $("#app").innerHTML=`<div class="rowb"><h2>Mistake Vault</h2><select onchange="vf=this.value;vault()" aria-label="Filter by track">${[["all","All tracks"],...Object.entries(TR)].map(([k,n])=>`<option value="${k}" ${vf===k?"selected":""}>${n}</option>`).join("")}</select></div>`+
+ (l.length?l.map(i=>{const q=Q[i];return `<div class="card rv"><small>${TR[q[0]]}, ${esc(q[1])}</small><p class="qt">${esc(q[2])}</p><p>Correct answer: <b>${esc(q[3][q[4]])}</b></p><ol>${q[5].split("|").map(s=>`<li>${esc(s)}</li>`).join("")}</ol><div class="row"><button class="btn ghost sm" onclick="S.v=S.v.filter(x=>x!==${i});save();nav();vault()">Remove from vault</button></div></div>`}).join(""):'<div class="card"><p class="mut">Nothing here. Missed and skipped questions are added automatically after each mock, and you can save any question from its answer review.</p></div>')}
+function notes(){$("#app").innerHTML=`<div class="rowb"><h2>Revision notes</h2><small id="ns">${user?"Saved to your account":"Saved on this device"}</small></div><textarea id="nb" placeholder="Formulas, traps, and rules you keep forgetting." aria-label="Revision notes"></textarea>`;
+ const b=$("#nb");b.value=S.n;b.oninput=()=>{S.n=b.value;$("#ns").textContent="Saving…";clearTimeout(nt);nt=setTimeout(()=>{save();const e=$("#ns");if(e)e.textContent=user?"Saved to your account":"Saved on this device"},700)}}
+function pro(){const R=[["Mocks per day","3","Unlimited"],["Sectional mocks, all four tracks","✓","✓"],["Full mixed-track mock","—","✓"],["Score, accuracy, topic breakdown","✓","✓"],["Time analysis for every question","Average only","✓"],["Mistake Vault and notes","✓","✓"],["Exportable report","—","✓"]];
+ $("#app").innerHTML=`<div class="hero"><h1>Pro Pass</h1><p>₹499 for 90 days. It is a pass, not a subscription, so nothing renews on its own.</p></div><div class="card"><table><tr><th></th><th>Free</th><th>Pro</th></tr>${R.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td class="${r[2]==="✓"?"y":""}">${r[2]}</td></tr>`).join("")}</table>
+ <div class="row"><button class="btn" onclick="togglePro()">${S.pro?"Deactivate Pro Pass":"Activate Pro Pass"}</button></div><p class="note" style="margin-top:12px">This is a demo checkout: no payment is taken. Activation is saved to ${user?"your account":"this device (sign in to keep it across devices)"}. Connect a payment provider before charging real users.</p></div>`}
+function togglePro(){S.pro=!S.pro;save();toast(S.pro?"Pro Pass activated.":"Pro Pass deactivated.");nav();pro()}
+draw();
+</script></body></html>
